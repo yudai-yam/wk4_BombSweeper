@@ -11,9 +11,13 @@ public class BombSquare extends GameSquare
 
 		Random r = new Random();
 		thisSquareHasBomb = (r.nextInt(MINE_PROBABILITY) == 0);
+
 	}
 
 	public void clicked()
 	{
+		if (thisSquareHasBomb == true){
+			setImage("images/bomb.png");
+		}
 	}
 }
