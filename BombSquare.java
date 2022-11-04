@@ -5,8 +5,14 @@ public class BombSquare extends GameSquare
 	private boolean thisSquareHasBomb = false;
 	public static final int MINE_PROBABILITY = 10;
 
+	static Driver driver = new Driver();
+
+	static int height = driver.getHeight();
+	static int width = driver.getWidth();
+
 	// store the index of squares with bomb
-	static volatile int[][] arr = new int[10][10];
+	static volatile int[][] arr = new int[width][height];
+	
 
 
 	public BombSquare(int x, int y, GameBoard board)
@@ -69,7 +75,7 @@ public class BombSquare extends GameSquare
 		arr[this.xLocation][this.yLocation] = 0;
 		for (int i=0; i<3; i++){
 			for (int j=0; j<3; j++){
-				if (0 <= this.xLocation+i-1 && this.xLocation+i-1 <= 9 && 0 <= this.yLocation+j-1 && this.yLocation+j-1 <= 9){
+				if (0 <= this.xLocation+i-1 && this.xLocation+i-1 <= width-1 && 0 <= this.yLocation+j-1 && this.yLocation+j-1 <= height-1){
 					if (arr[this.xLocation+i-1][this.yLocation+j-1] == 1){
 						counter++;
 					}
