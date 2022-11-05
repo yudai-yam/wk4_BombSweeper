@@ -1,7 +1,7 @@
 public class Driver
 {
-	private static int width = 11;
-	private static int height = 10;
+	private static int width = 30;
+	private static int height = 20;
 
 	public static void main(String[] Args)
 	{
