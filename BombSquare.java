@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * This provides visual actions when a user click on a square on the board.
+ * @author Yudai Yamase
+ */
 public class BombSquare extends GameSquare
 {
 	private boolean thisSquareHasBomb = false;
@@ -11,11 +15,16 @@ public class BombSquare extends GameSquare
 	static int height = driver.getHeight();
 	static int width = driver.getWidth();
 
-	// store the index of squares with bomb
+	/** store the index of squares with bomb **/
 	static volatile int[][] arr = new int[width][height];
 	
 
-
+	/**
+	 * This sets up initial state of squares. It also stores where a bomb is located when ditected
+	 * @param x x-coordinate of a square
+	 * @param y y-coordinate of a square
+	 * @param board gameboard where each square resides
+	 */
 	public BombSquare(int x, int y, GameBoard board)
 	{
 		super(x, y, "images/blank.png", board);
@@ -31,6 +40,10 @@ public class BombSquare extends GameSquare
 		}
 	}
 
+	/**
+	 * It gets invoked if a user click on a square.
+	 * If the square has a bomb underneath, it shows the image of bomb, else it calls bombChecker method
+	 */
 	public void clicked()
 	{
 		if (thisSquareHasBomb == true){
@@ -42,9 +55,14 @@ public class BombSquare extends GameSquare
 		}
 	}
 
+	/**
+	 * It checks how many bombs are hidden in adjacent squares. If none, it reveals the status of adjacent squares.
+	 * @param x x-coordinate of a square
+	 * @param y y-coordinate of a square
+	 * @param first true if it's the first time to get called, and if it is a recursive call, returns false
+	 */
 	public void bombChecker(int x, int y, boolean first){
 		int counter = 0;
-		//arr[x][y] = 0;
 		for (int i=0; i<3; i++){
 			for (int j=0; j<3; j++){
 				if (0 <= x+i-1 && x+i-1 <= width-1 && 0 <= y+j-1 && y+j-1 <= height-1){ // check if it's within the range
@@ -59,30 +77,30 @@ public class BombSquare extends GameSquare
 			case 0:
 				board.getSquareAt(x, y).setImage("images/0.png");
 				if (first){
-					if (x-1>0){
+					if (x-1>=0){
 						bombChecker(x-1, y, false);
-						if (y-1>0){
+						if (y-1>=0){
 							bombChecker(x-1, y-1, false);
 						}
 					}
 					
-					if (y-1>0){
+					if (y-1>=0){
 						bombChecker(x, y-1, false);
-						if (x+1<width-1){
+						if (x+1<=width-1){
 							bombChecker(x+1, y-1, false);
 						}
 					}
 
-					if (x+1 <width-1){
+					if (x+1<=width-1){
 						bombChecker(x+1, y, false);
-						if (y+1 < height-1){
+						if (y+1<=height-1){
 							bombChecker(x+1, y+1, false);
 						}
 					}
 
-					if (y+1 <height-1){
+					if (y+1<=height-1){
 						bombChecker(x, y+1, false);
-						if (x-1 >0){
+						if (x-1>=0){
 							bombChecker(x-1, y+1, false);
 						}
 					}
@@ -114,43 +132,4 @@ public class BombSquare extends GameSquare
 				break;	
 		}
 	}
-
-	public void recursiveBombChecker(int x, int y){
-
-		board.getSquareAt(x-1, y).setImage(TOOL_TIP_TEXT_KEY);
-
-
-
-
-
-		/* if (x-1 > 0){
-			board.getSquareAt(x-1,y).clicked();
-			if (y-1 > 0){
-				board.getSquareAt(x-1,y-1).clicked();
-			}
-			if (y+1 < height-1){
-				board.getSquareAt(x-1, y+1).clicked();
-				board.getSquareAt(x, y+1).clicked();
-			}
-		}
-		if (y-1 > 0){
-			board.getSquareAt(x,y-1).clicked();
-			if (x+1 < width-1){
-				board.getSquareAt(x+1, y-1).clicked();
-			}
-		}
-
-		if (x+1 <width-1){
-			board.getSquareAt(x+1,y).clicked();
-			if (y+1 < height+1){
-				board.getSquareAt(x+1,y+1).clicked();
-			}
-		} */
-	}
-
-		
-	
-
-
-	
 }

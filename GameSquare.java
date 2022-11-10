@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 /**
  * This class provides a representation of a single game square.
  * The class is abstract, and should be extended to provide domain 
